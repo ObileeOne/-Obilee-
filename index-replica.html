@@ -76,21 +76,23 @@
       position: absolute;
       bottom: -5px;
       right: -5px;
-      width: 18px;
-      height: 18px;
-      background-color: #0066cc; /* Blue color for scarab */
-      clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+      width: 20px;
+      height: 20px;
+      background-color: #0095f6;
+      border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       border: 2px solid #121212;
-      font-size: 10px;
-      color: white;
-      font-weight: bold;
     }
     .verified-badge::before {
-      content: '🐞'; /* Scarab Beetle emoji */
-      font-size: 12px;
+      content: '';
+      width: 10px;
+      height: 8px;
+      border-left: 2px solid white;
+      border-bottom: 2px solid white;
+      transform: rotate(-45deg);
+      display: block;
     }
     .story-label {
       text-align: center;
@@ -182,25 +184,6 @@
         transform: translate(calc(100px - 50% * random()), calc(100px - 50% * random())) scale(0);
       }
     }
-
-    /* Twitter-style Verified Badge */
-    .verified-icon {
-      width: 18px;
-      height: 18px;
-      background-color: #1da1f2;
-      color: white;
-      border-radius: 50%;
-      font-size: 10px;
-      font-weight: bold;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      margin-left: 5px;
-    }
-    .verified-icon::before {
-      content: "✔";
-      font-size: 10px;
-    }
   </style>
 </head>
 <body>
@@ -209,10 +192,10 @@
   <div class="header">
     <h1>𓆣Obilee</h1>
     <div class="header-icons">
-      <div class="icon-wrapper" onclick="sparkAndNavigate(event, 'notification-replica.html')">
+      <div class="icon-wrapper" onclick="sparkAndNavigate(event, 'notification.html')">
         <i data-lucide="heart"></i>
       </div>
-      <div class="icon-wrapper" onclick="sparkAndNavigate(event, 'direct-messages-replica.html')">
+      <div class="icon-wrapper" onclick="sparkAndNavigate(event, 'direct-messages.html')">
         <i data-lucide="send"></i>
       </div>
     </div>
@@ -225,7 +208,7 @@
     <!-- Posts -->
     <div class="post">
       <img src="https://upload.wikimedia.org/wikipedia/commons/f/fb/Rihanna_Fenty_2018.png" alt="Rihanna Post" />
-      <h3>@rihanna <span class="verified-icon"></span></h3>
+      <h3>@rihanna <span class="verified-badge" style="position: static; display: inline-block;"></span></h3>
       <p>Throwback to an unforgettable night! #navy</p>
       <p><strong>Followers:</strong> 254M</p>
       <button onclick="alert('Liked! Rihanna\'s bots are now following you back and liking your posts!')">Like</button>
@@ -234,7 +217,7 @@
 
     <div class="post">
       <img src="https://upload.wikimedia.org/wikipedia/commons/9/90/Drake_July_2016.jpg" alt="Drake Post" />
-      <h3>@drake <span class="verified-icon"></span></h3>
+      <h3>@drake <span class="verified-badge" style="position: static; display: inline-block;"></span></h3>
       <p>Views from the 6 dropping soon.</p>
       <p><strong>Followers:</strong> 220M</p>
       <button onclick="alert('Liked! Drake\'s bots are now following you back and liking your posts!')">Like</button>
@@ -243,7 +226,7 @@
 
     <div class="post">
       <img src="https://upload.wikimedia.org/wikipedia/commons/5/5d/Beyonce_2011.jpg" alt="Beyonce Post" />
-      <h3>@beyonce <span class="verified-icon"></span></h3>
+      <h3>@beyonce <span class="verified-badge" style="position: static; display: inline-block;"></span></h3>
       <p>Feeling blessed. #beyhive</p>
       <p><strong>Followers:</strong> 310M</p>
       <button onclick="alert('Liked! Beyonce\'s bots are now following you back and liking your posts!')">Like</button>
@@ -253,11 +236,11 @@
 
   <!-- Bottom Navigation -->
   <div class="bottom-nav">
-    <a href="index-replica.html" class="nav-icon">
+    <a href="index.html" class="nav-icon">
       <i data-lucide="home"></i>
       <span>Home</span>
     </a>
-    <a href="explore-replica.html" class="nav-icon">
+    <a href="explore.html" class="nav-icon">
       <i data-lucide="compass"></i>
       <span>Explore</span>
     </a>
@@ -265,13 +248,17 @@
       <i data-lucide="plus-circle"></i>
       <span>Upload</span>
     </a>
-    <a href="reels-replica.html" class="nav-icon">
+    <a href="reels.html" class="nav-icon">
       <i data-lucide="film"></i>
       <span>Reels</span>
     </a>
-    <a href="profile-replica.html" class="nav-icon">
+    <a href="profile.html" class="nav-icon">
       <i data-lucide="user"></i>
       <span>Profile</span>
+    </a>
+    <a href="admin-login.html" class="nav-icon">
+      <i data-lucide="lock"></i>
+      <span>Admin</span>
     </a>
   </div>
 
