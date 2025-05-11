@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Following List</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Orbitron', sans-serif;
+      background-color: #121212;
+      color: #e0e0e0;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    .top-bar {
+      display: flex;
+      align-items: center;
+      padding: 1em;
+      border-bottom: 1px solid #333;
+      background-color: #1e1e1e;
+    }
+    .following-container {
+      padding: 1em;
+      text-align: center;
+    }
+    .following-list {
+      margin-top: 1em;
+    }
+    .following-item {
+      padding: 0.5em;
+      border-bottom: 1px solid #333;
+    }
+    .following-item:last-child {
+      border-bottom: none;
+    }
+    .suggestions {
+      margin-top: 2em;
+      text-align: center;
+    }
+    .suggestion-item {
+      padding: 0.5em;
+      border-bottom: 1px solid #333;
+    }
+    .bottom-nav {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background-color: #1e1e1e;
+      padding: 0.5em 0;
+      box-shadow: 0 -2px 5px rgba(0,0,0,0.5);
+    }
+    .nav-icon {
+      color: #e0e0e0;
+      text-align: center;
+      font-size: 0.75em;
+      text-decoration: none;
+    }
+    .nav-icon:hover {
+      color: #00bcd4;
+    }
+    .nav-icon svg {
+      width: 24px;
+      height: 24px;
+      display: block;
+      margin: 0 auto 4px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <h1>Following List</h1>
+  </div>
+
+  <!-- Following Content -->
+  <div class="following-container">
+    <div class="following-list">
+      <div class="following-item">Following 1</div>
+      <div class="following-item">Following 2</div>
+      <div class="following-item">Following 3</div>
+      <div class="following-item">Following 4</div>
+      <div class="following-item">Following 5</div>
+    </div>
+
+    <!-- Suggestions Section -->
+    <div class="suggestions">
+      <h3>Suggested People to Follow</h3>
+      <div class="suggestion-item">Suggested Person 1</div>
+      <div class="suggestion-item">Suggested Person 2</div>
+      <div class="suggestion-item">Suggested Person 3</div>
+      <div class="suggestion-item">Suggested Person 4</div>
+      <div class="suggestion-item">Suggested Person 5</div>
+    </div>
+  </div>
+
+  <!-- Bottom Nav -->
+  <div class="bottom-nav">
+    <a href="index.html" class="nav-icon">
+      <i data-lucide="home"></i>
+      <span>Home</span>
+    </a>
+    <a href="explore.html" class="nav-icon">
+      <i data-lucide="compass"></i>
+      <span>Explore</span>
+    </a>
+    <a href="upload.html" class="nav-icon">
+      <i data-lucide="plus-circle"></i>
+      <span>Upload</span>
+    </a>
+    <a href="profile.html" class="nav-icon">
+      <i data-lucide="user"></i>
+      <span>Profile</span>
+    </a>
+    <a href="admin-login.html" class="nav-icon">
+      <i data-lucide="lock"></i>
+      <span>Admin</span>
+    </a>
+  </div>
+
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>

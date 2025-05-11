@@ -1,0 +1,166 @@
+body {
+  margin: 0;
+  font-family: 'Orbitron', sans-serif;
+  background-color: #121212;
+  color: #e0e0e0;
+}
+
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1em;
+  border-bottom: 1px solid #333;
+}
+
+.page-title {
+  font-size: 1.5em;
+  margin: 0;
+}
+
+.settings-icon {
+  color: #e0e0e0;
+  cursor: pointer;
+  position: relative;
+}
+
+.settings-icon:hover {
+  color: #00bcd4;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 30px;
+  right: 0;
+  background-color: #1e1e1e;
+  min-width: 150px;
+  border-radius: 5px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  text-align: center;
+}
+
+.dropdown-menu a {
+  color: #e0e0e0;
+  text-decoration: none;
+  padding: 10px;
+  display: block;
+}
+
+.dropdown-menu a:hover {
+  background-color: #00bcd4;
+}
+
+.content {
+  padding: 1em;
+  text-align: center;
+}
+
+.profile-section {
+  margin-bottom: 2em;
+}
+
+.profile-pic {
+  position: relative;
+  margin: 0 auto 1em;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-color: #333;
+  background-size: cover;
+  background-position: center;
+}
+
+.add-icon {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background-color: #00bcd4;
+  border-radius: 50%;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.verified-badge {
+  width: 20px;
+  vertical-align: middle;
+}
+
+.post-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 10px;
+}
+
+.post-grid img {
+  width: 100%;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.create-post-btn {
+  margin: 2em auto;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2em;
+  color: #00bcd4;
+  cursor: pointer;
+  position: relative;
+}
+
+.create-post-btn span {
+  position: absolute;
+  bottom: -20px;
+  font-size: 0.8em;
+  color: #e0e0e0;
+}
+
+.popup {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.8);
+  justify-content: center;
+  align-items: center;
+}
+
+.popup-content {
+  background-color: #fff;
+  color: #000;
+  padding: 2em;
+  border-radius: 10px;
+  text-align: center;
+  position: relative;
+}
+
+.popup-content .close {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-size: 1.5em;
+  cursor: pointer;
+}
+
+.emoji-section {
+  font-size: 2em;
+  margin-bottom: 1em;
+}
+
+.qr-code img {
+  width: 150px;
+  margin-bottom: 1em;
+}
+
+.social-share a {
+  margin: 0 10px;
+  text-decoration: none;
+  color: #00bcd4;
+}

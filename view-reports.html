@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>View Reports</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+  <!-- Link to Google Fonts for Orbitron -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Orbitron', sans-serif;
+      background-color: #121212;
+      color: #e0e0e0;
+      padding: 1em;
+    }
+    h2, h3 {
+      font-family: 'Orbitron', sans-serif;
+      text-align: center;
+      margin-bottom: 1em;
+      font-weight: 700;
+    }
+    h2 {
+      margin-bottom: 2em;
+    }
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      margin-top: 2em;
+      width: 100%;
+    }
+    .chart-container {
+      width: 48%;
+      margin-bottom: 2em;
+      padding: 1em;
+      border-radius: 10px;
+      background-color: #1e1e1e;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    }
+    .chart-container canvas {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+    }
+    .container-mobile {
+      display: block;
+      width: 100%;
+    }
+    h3 {
+      text-align: center;
+      margin-bottom: 1em;
+      font-size: 1.2em;
+    }
+    .back-button {
+      display: block;
+      margin-top: 2em;
+      text-align: center;
+      background-color: #00bcd4;
+      color: #121212;
+      padding: 0.5em 1.5em;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .back-button:hover {
+      background-color: #0199a8;
+    }
+
+    .back-arrow {
+      position: absolute;
+      top: 1em;
+      left: 1em;
+      background: none;
+      border: none;
+      color: #00bcd4;
+      font-size: 1.5em;
+      cursor: pointer;
+      transition: color 0.2s ease;
+    }
+
+    .back-arrow:hover {
+      color: #0199a8;
+    }
+
+    @media (max-width: 767px) {
+      .chart-container {
+        width: 100%;
+        margin-bottom: 1em;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Back Arrow Button -->
+  <button class="back-arrow" onclick="window.location.href='admin.html'">&#8592;</button>
+
+  <h2>Website Reports</h2>
+
+  <div class="container">
+    <!-- User Growth Line Chart -->
+    <div class="chart-container">
+      <h3>User Growth</h3>
+      <canvas id="userGrowthChart"></canvas>
+    </div>
+
+    <!-- Engagement Metrics Bar Chart -->
+    <div class="chart-container">
+      <h3>Engagement Metrics</h3>
+      <canvas id="engagementChart"></canvas>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- User Progress Line Chart -->
+    <div class="chart-container">
+      <h3>User Progress</h3>
+      <canvas id="userProgressChart"></canvas>
+    </div>
+  </div>
+
+  <!-- Backup Back Button at Bottom -->
+  <button class="back-button" onclick="window.location.href='admin.html'">Back to Admin Panel</button>
+
+  <script>
+    const userGrowthData = {
+      labels: ['January', 'February', 'March', 'April', 'May'],
+      datasets: [{
+        label: 'User Growth',
+        data: [100, 200, 300, 500, 700],
+        backgroundColor: 'rgba(0, 188, 212, 0.2)',
+        borderColor: '#00bcd4',
+        borderWidth: 2,
+        fill: true,
+      }]
+    };
+
+    const engagementData = {
+      labels: ['Likes', 'Shares', 'Comments'],
+      datasets: [{
+        label: 'Engagement Metrics',
+        data: [500, 150, 100],
+        backgroundColor: ['#ff6384', '#36a2eb', '#4bc0c0'],
+        borderColor: 'transparent',
+        borderWidth: 1
+      }]
+    };
+
+    const userProgressData = {
+      labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5'],
+      datasets: [{
+        label: 'Follower Count',
+        data: [50, 120, 190, 250, 300],
+        backgroundColor: 'rgba(0, 188, 212, 0.2)',
+        borderColor: '#00bcd4',
+        borderWidth: 2,
+        fill: true,
+      }]
+    };
+
+    new Chart(document.getElementById('userGrowthChart').getContext('2d'), {
+      type: 'line',
+      data: userGrowthData,
+      options: {
+        responsive: true,
+        scales: {
+          x: { beginAtZero: true },
+          y: { beginAtZero: true }
+        },
+        plugins: {
+          legend: { position: 'top' }
+        }
+      }
+    });
+
+    new Chart(document.getElementById('engagementChart').getContext('2d'), {
+      type: 'bar',
+      data: engagementData,
+      options: {
+        responsive: true,
+        scales: {
+          x: { beginAtZero: true },
+          y: { beginAtZero: true }
+        },
+        plugins: {
+          legend: { position: 'top' }
+        }
+      }
+    });
+
+    new Chart(document.getElementById('userProgressChart').getContext('2d'), {
+      type: 'line',
+      data: userProgressData,
+      options: {
+        responsive: true,
+        scales: {
+          x: { beginAtZero: true },
+          y: { beginAtZero: true }
+        },
+        elements: { line: { tension: 0.4 } },
+        plugins: {
+          legend: { position: 'top' }
+        }
+      }
+    });
+  </script>
+
+</body>
+</html>

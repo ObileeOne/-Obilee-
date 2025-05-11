@@ -1,0 +1,21 @@
+/* Thicker, animated border for profile image */
+.story-highlight-border {
+  position: absolute;
+  width: 150px; /* 30px bigger than the profile picture for the highlight circle */
+  height: 150px;
+  border-radius: 50%;
+  border: 6px solid #00bcd4; /* Thicker blue border for the highlight */
+  top: -15px;
+  left: -15px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  opacity: 0; /* Hidden by default */
+  transition: all 0.5s ease-in-out;
+  transform-origin: center;
+}
+
+/* Animation for the circular border rotating counterclockwise */
+.profile-image-container.clicked .story-highlight-border {
+  opacity: 1;
+  transform: rotate(-360deg); /* Rotate counterclockwise */
+  transition: transform 1s cubic-bezier(0.42, 0, 0.58, 1); /* Smooth counterclockwise rotation */
+}

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Notifications - 𓅓Obilee</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Orbitron', sans-serif;
+      background-color: #121212;
+      color: #e0e0e0;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    .header {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0.5em 1em;
+      background-color: #1e1e1e;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+      position: sticky;
+      top: 0;
+    }
+    .header h1 {
+      margin: 0;
+      font-size: 1.5em;
+    }
+    .content {
+      flex: 1;
+      padding: 1em;
+      padding-bottom: 80px; /* space for bottom nav */
+    }
+    .notification {
+      display: flex;
+      align-items: center;
+      background-color: #1e1e1e;
+      padding: 1em;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+      margin-bottom: 1em;
+    }
+    .notification img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      margin-right: 1em;
+    }
+    .notification p {
+      margin: 0;
+      font-size: 0.9em;
+      flex: 1;
+    }
+    button {
+      background-color: #333;
+      color: #e0e0e0;
+      border: none;
+      padding: 0.5em 1em;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #00bcd4;
+    }
+    .bottom-nav {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background-color: #1e1e1e;
+      padding: 0.5em 0;
+      box-shadow: 0 -2px 5px rgba(0,0,0,0.5);
+    }
+    .nav-icon {
+      color: #e0e0e0;
+      text-align: center;
+      font-size: 0.75em;
+      text-decoration: none;
+    }
+    .nav-icon:hover {
+      color: #00bcd4;
+    }
+    .nav-icon svg {
+      width: 24px;
+      height: 24px;
+      display: block;
+      margin: 0 auto 4px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <h1>Notifications</h1>
+  </div>
+
+  <!-- Notifications Content -->
+  <div class="content">
+    <div class="notification">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/f/fb/Rihanna_Fenty_2018.png" alt="Rihanna">
+      <p><strong>@rihanna</strong> liked your post. 2h ago</p>
+      <button>View</button>
+    </div>
+
+    <div class="notification">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/9/90/Drake_July_2016.jpg" alt="Drake">
+      <p><strong>@drake</strong> started following you. 5h ago</p>
+      <button>Follow Back</button>
+    </div>
+
+    <div class="notification">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/5/5d/Beyonce_2011.jpg" alt="Beyonce">
+      <p><strong>@beyonce</strong> commented: "Amazing!" 1d ago</p>
+      <button>Reply</button>
+    </div>
+
+    <div class="notification">
+      <img src="https://via.placeholder.com/100" alt="User">
+      <p><strong>@yourfriend</strong> mentioned you in a comment. 3d ago</p>
+      <button>View</button>
+    </div>
+  </div>
+
+  <!-- Bottom Navigation -->
+  <div class="bottom-nav">
+    <a href="index-replica.html" class="nav-icon">
+      <i data-lucide="home"></i>
+      <span>Home</span>
+    </a>
+    <a href="explore.html" class="nav-icon">
+      <i data-lucide="compass"></i>
+      <span>Explore</span>
+    </a>
+    <a href="#" class="nav-icon" onclick="document.getElementById('fileInput').click();">
+      <i data-lucide="plus-circle"></i>
+      <span>Upload</span>
+    </a>
+    <a href="reels.html" class="nav-icon">
+      <i data-lucide="film"></i>
+      <span>Reels</span>
+    </a>
+    <a href="profile-replica.html" class="nav-icon">
+      <i data-lucide="user"></i>
+      <span>Profile</span>
+  </div>
+
+  <input type="file" id="fileInput" accept="image/*,video/*" style="display:none;" />
+
+  <script>
+    lucide.createIcons();
+  </script>
+
+</body>
+</html>

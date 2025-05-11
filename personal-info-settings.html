@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Personal Information Settings</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Orbitron', sans-serif;
+      background-color: #121212;
+      color: #ffffff;
+    }
+    header {
+      background-color: #000000;
+      padding: 1em;
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid #333;
+      color: white;
+      font-size: 1.2em;
+    }
+    .back-arrow {
+      font-weight: bold;
+      font-size: 1.5em;
+      color: #ffffff;
+      cursor: pointer;
+      margin-right: 1em;
+    }
+    .form-container {
+      max-width: 400px;
+      margin: 2em auto;
+      text-align: center;
+      padding: 2em;
+    }
+    input {
+      display: block;
+      width: 100%;
+      padding: 0.8em;
+      margin: 1em 0;
+      border-radius: 5px;
+      border: none;
+      background-color: #222;
+      color: #fff;
+    }
+    button {
+      width: 100%;
+      padding: 0.8em;
+      margin: 1em 0;
+      border: none;
+      border-radius: 5px;
+      background-color: #00bcd4;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0097a7;
+    }
+    .disabled {
+      background-color: #555 !important;
+      cursor: not-allowed;
+    }
+    #verificationMessage {
+      color: #fbc02d;
+      font-size: 0.9em;
+      margin-top: 1em;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <span class="back-arrow" onclick="window.location.href='edit-profile.html'">&larr;</span>
+    <span>Personal Information Settings</span>
+  </header>
+
+  <div class="form-container">
+    <input type="text" id="fullName" placeholder="Full Name" />
+    <input type="date" id="birthday" placeholder="Birthdate" />
+    <input type="email" id="email" placeholder="Email Address" />
+    <button id="verifyEmailButton" onclick="verifyEmail()">Verify Email</button>
+    <button id="saveButton" onclick="savePersonalInfo()">Save Changes</button>
+    <p id="verificationMessage"></p>
+  </div>
+
+  <script>
+    let userInfo = {
+      fullName: "",
+      birthday: "",
+      email: "johndoe@example.com"
+    };
+
+    let saved = false;
+    let isVerified = false;
+
+    window.onload = function () {
+      document.getElementById('email').value = userInfo.email;
+    };
+
+    function savePersonalInfo() {
+      const fullName = document.getElementById('fullName');
+      const birthday = document.getElementById('birthday');
+      const email = document.getElementById('email');
+
+      if (!fullName.value || !birthday.value || !email.value) {
+        alert("Please complete all fields.");
+        return;
+      }
+
+      if (!saved) {
+        userInfo.fullName = fullName.value;
+        userInfo.birthday = birthday.value;
+        saved = true;
+
+        fullName.disabled = true;
+        birthday.disabled = true;
+      }
+
+      if (email.value !== userInfo.email && !isVerified) {
+        alert("Please verify your new email before saving.");
+        return;
+      }
+
+      userInfo.email = email.value;
+
+      email.disabled = true;
+      document.getElementById('verifyEmailButton').disabled = true;
+      document.getElementById('verifyEmailButton').classList.add('disabled');
+      document.getElementById('saveButton').disabled = true;
+      document.getElementById('saveButton').classList.add('disabled');
+
+      alert("Your personal information has been saved.");
+    }
+
+    function verifyEmail() {
+      const newEmail = document.getElementById('email').value;
+
+      if (newEmail === userInfo.email) {
+        alert("You haven't changed your email address.");
+        return;
+      }
+
+      alert("A verification code will be sent to your new email address.");
+      document.getElementById('verificationMessage').innerText = "Verification code sent to " + newEmail;
+
+      setTimeout(() => {
+        const userCode = prompt("Enter the verification code sent to your email:");
+        if (userCode === "12345") {
+          isVerified = true;
+          alert("Email verified successfully!");
+        } else {
+          alert("Invalid code. Please try again.");
+        }
+      }, 1000);
+    }
+  </script>
+</body>
+</html>

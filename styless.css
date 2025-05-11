@@ -1,0 +1,69 @@
+/* General Styling */
+body {
+  margin: 0;
+  font-family: 'Orbitron', sans-serif;
+  background-color: #121212;
+  color: #e0e0e0;
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+}
+
+/* Global Splash Screen */
+.splash-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #121212;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 1s ease-out;
+}
+
+.splash-screen.hidden {
+  visibility: hidden;
+  opacity: 0;
+}
+
+.splash-content {
+  text-align: center;
+}
+
+.splash-content h1 {
+  font-size: 3em;
+  color: #00bcd4;
+}
+
+.logo {
+  font-size: 5em;
+  color: #fff;
+  animation: fadeIn 2s ease-in-out infinite;
+}
+
+/* Fade-in animation for logo */
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  50% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* Main content style */
+#mainContent {
+  display: none;
+  text-align: center;
+  padding: 50px;
+}
+
+#mainContent h1 {
+  color: #fff;
+}
+
+/* Additional content styling */
+.content {
+  padding: 20px;
+  text-align: center;
+}

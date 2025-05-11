@@ -1,0 +1,20 @@
+.verified-badge {
+  position: absolute;
+  bottom: -5px;
+  right: -5px;
+  width: 20px;
+  height: 20px;
+  background-color: #0095f6; /* Instagram blue */
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 0 2px #121212; /* border effect around */
+}
+
+.verified-badge::before {
+  content: '✔';
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+}

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Settings</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Orbitron', sans-serif;
+      background-color: #121212;
+      color: #e0e0e0;
+      padding: 0;
+      transition: background 0.3s ease;
+    }
+    header {
+      background-color: #1e1e1e;
+      padding: 1em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      border-bottom: 1px solid #333;
+      font-size: 1.5em;
+    }
+    .back-arrow {
+      position: absolute;
+      left: 1em;
+      top: 1em;
+      font-size: 1.5em;
+      font-weight: bold;
+      cursor: pointer;
+      color: #ffffff;
+    }
+    h2, h3 {
+      text-align: center;
+    }
+    .container {
+      padding: 1em;
+    }
+    .setting {
+      background: #1e1e1e;
+      padding: 1em;
+      border-radius: 10px;
+      margin: 1em 0;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+    }
+    input, button {
+      width: 100%;
+      padding: 0.5em;
+      margin: 0.5em 0;
+      border: none;
+      border-radius: 5px;
+    }
+    button {
+      background: #333;
+      color: #e0e0e0;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #00bcd4;
+    }
+    .toggle-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <span class="back-arrow" onclick="window.location.href='admin.html'">&larr;</span>
+    Admin Settings
+  </header>
+
+  <div class="container">
+    <!-- Upload Theme Section -->
+    <div class="setting">
+      <h3>Change App Theme</h3>
+      <input type="file" id="backgroundUpload" />
+      <button onclick="saveBackground()">Upload Background</button>
+    </div>
+
+    <!-- Change Admin Credentials Section -->
+    <div class="setting">
+      <h3>Change Admin Credentials</h3>
+      <input type="text" placeholder="New Username">
+      <input type="password" placeholder="New Password">
+      <button onclick="alert('Admin credentials updated')">Update</button>
+    </div>
+
+    <!-- AI Spam Protection Toggle -->
+    <div class="setting">
+      <h3>AI Spam Protection</h3>
+      <div class="toggle-label">
+        <span>Enable AI Spam Detection</span>
+        <input type="checkbox" id="aiSpamToggle" onclick="toggleSpamDetection()">
+      </div>
+      <p id="aiStatus">AI Spam Protection is currently OFF</p>
+    </div>
+
+    <!-- Scan Message Section -->
+    <div class="setting">
+      <h3>Scan Message for Spam</h3>
+      <input type="text" id="messageToScan" placeholder="Enter message to scan">
+      <button onclick="scanMessage()">Scan for Spam</button>
+      <p id="scanResult">Scan result will appear here</p>
+    </div>
+  </div>
+
+  <script>
+    // On page load: check if a background is saved and set it
+    window.addEventListener('DOMContentLoaded', () => {
+      const savedBackground = localStorage.getItem('customBackground');
+      if (savedBackground) {
+        document.body.style.backgroundImage = `url(${savedBackground})`;
+        document.body.style.backgroundSize = 'cover';
+        document.body.style.backgroundPosition = 'center';
+      }
+    });
+
+    // Handle Upload Background when the button is clicked
+    function saveBackground() {
+      const fileInput = document.getElementById('backgroundUpload');
+      const file = fileInput.files[0];
+
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const imageUrl = e.target.result;
+          // Save to localStorage
+          localStorage.setItem('customBackground', imageUrl);
+          // Set as background
+          document.body.style.backgroundImage = `url(${imageUrl})`;
+          document.body.style.backgroundSize = 'cover';
+          document.body.style.backgroundPosition = 'center';
+          alert('Background uploaded and saved!');
+        };
+        reader.readAsDataURL(file);
+      } else {
+        alert('Please select a file first.');
+      }
+    }
+
+    // Handle toggle AI Spam detection
+    let aiSpamProtectionStatus = false;
+
+    function toggleSpamDetection() {
+      aiSpamProtectionStatus = !aiSpamProtectionStatus;
+      const aiStatusText = aiSpamProtectionStatus ? 'ON' : 'OFF';
+      document.getElementById('aiStatus').textContent = `AI Spam Protection is currently ${aiStatusText}`;
+    }
+
+    // Scan the message for spam using Hugging Face's API
+    function scanMessage() {
+      const message = document.getElementById('messageToScan').value;
+
+      if (!message) {
+        document.getElementById('scanResult').textContent = 'Please enter a message to scan.';
+        return;
+      }
+
+      if (aiSpamProtectionStatus) {
+        scanWithHuggingFace(message);
+      } else {
+        document.getElementById('scanResult').textContent = 'AI Spam Protection is off. Please enable it first.';
+      }
+    }
+
+    function scanWithHuggingFace(message) {
+      const apiKey = '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'; // Your Hugging Face API key
+      const modelEndpoint = 'https://api-inference.huggingface.co/models/distilbert-base-uncased-finetuned-sst-2-english';
+      const proxy = 'https://cors-anywhere.herokuapp.com/';
+
+      fetch(proxy + modelEndpoint, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${apiKey}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ inputs: message })
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data && data[0]) {
+          const result = data[0];
+          document.getElementById('scanResult').textContent = `Spam Detection Result: ${result.label || 'No spam detected'}`;
+        } else {
+          document.getElementById('scanResult').textContent = 'Error processing the message.';
+        }
+      })
+      .catch(error => {
+        document.getElementById('scanResult').textContent = 'Error scanning message.';
+        console.error('Error:', error);
+      });
+    }
+  </script>
+
+</body>
+</html>

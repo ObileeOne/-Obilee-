@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>𓆣Obilee</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Orbitron', sans-serif;
+      background-color: #121212;
+      color: #e0e0e0;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.5em 1em;
+      background-color: #1e1e1e;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+      position: relative;
+      overflow: visible;
+    }
+    .header h1 {
+      margin: 0;
+      font-size: 1.5em;
+    }
+    .header-icons {
+      display: flex;
+      gap: 15px;
+      position: relative;
+    }
+    .header-icons .icon-wrapper {
+      position: relative;
+      cursor: pointer;
+    }
+    .notification-badge {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      background-color: #ff3b30;
+      color: white;
+      border-radius: 50%;
+      padding: 2px 6px;
+      font-size: 0.7em;
+      font-weight: bold;
+    }
+    .content {
+      flex: 1;
+      padding: 1em;
+      padding-bottom: 80px;
+    }
+    .story-panel {
+      display: flex;
+      overflow-x: auto;
+      padding: 1em 0;
+    }
+    .story {
+      flex: 0 0 auto;
+      width: 70px;
+      height: 70px;
+      border: 3px solid #ff5722;
+      border-radius: 50%;
+      margin-right: 10px;
+      background-size: cover;
+      background-position: center;
+      cursor: pointer;
+      position: relative;
+    }
+    .verified-badge {
+      position: absolute;
+      bottom: -5px;
+      right: -5px;
+      width: 20px;
+      height: 20px;
+      background-color: #0095f6;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid #121212;
+    }
+    .verified-badge::before {
+      content: '';
+      width: 10px;
+      height: 8px;
+      border-left: 2px solid white;
+      border-bottom: 2px solid white;
+      transform: rotate(-45deg);
+      display: block;
+    }
+    .story-label {
+      text-align: center;
+      font-size: 0.75em;
+      margin-top: 5px;
+      color: #e0e0e0;
+    }
+    .post {
+      background-color: #1e1e1e;
+      padding: 1em;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+      margin-bottom: 1em;
+    }
+    .post img {
+      width: 100%;
+      border-radius: 10px;
+    }
+    .post h3 {
+      margin: 0.5em 0 0.2em;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .post p {
+      font-size: 0.9em;
+      color: #ccc;
+    }
+    button {
+      background-color: #333;
+      color: #e0e0e0;
+      border: none;
+      padding: 0.5em 1em;
+      margin-top: 0.5em;
+      margin-right: 5px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #00bcd4;
+    }
+    .bottom-nav {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background-color: #1e1e1e;
+      padding: 0.5em 0;
+      box-shadow: 0 -2px 5px rgba(0,0,0,0.5);
+    }
+    .nav-icon {
+      color: #e0e0e0;
+      text-align: center;
+      font-size: 0.75em;
+      text-decoration: none;
+    }
+    .nav-icon:hover {
+      color: #00bcd4;
+    }
+    .nav-icon svg {
+      width: 24px;
+      height: 24px;
+      display: block;
+      margin: 0 auto 4px;
+    }
+    #fileInput {
+      display: none;
+    }
+
+    /* Sparks animation */
+    .spark {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: #ffcc00;
+      border-radius: 50%;
+      pointer-events: none;
+      animation: spark-animation 0.5s ease-out forwards;
+    }
+    @keyframes spark-animation {
+      from {
+        opacity: 1;
+        transform: translate(0, 0) scale(1);
+      }
+      to {
+        opacity: 0;
+        transform: translate(calc(100px - 50% * random()), calc(100px - 50% * random())) scale(0);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <h1>𓆣Obilee</h1>
+    <div class="header-icons">
+      <div class="icon-wrapper" onclick="sparkAndNavigate(event, 'notification.html')">
+        <i data-lucide="heart"></i>
+      </div>
+      <div class="icon-wrapper" onclick="sparkAndNavigate(event, 'direct-messages.html')">
+        <i data-lucide="send"></i>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+    <!-- Dynamic Story Panel -->
+    <div class="story-panel" id="storyPanel"></div>
+
+    <!-- Posts -->
+    <div class="post">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/f/fb/Rihanna_Fenty_2018.png" alt="Rihanna Post" />
+      <h3>@rihanna <span class="verified-badge" style="position: static; display: inline-block;"></span></h3>
+      <p>Throwback to an unforgettable night! #navy</p>
+      <p><strong>Followers:</strong> 254M</p>
+      <button onclick="alert('Liked! Rihanna\'s bots are now following you back and liking your posts!')">Like</button>
+      <button onclick="alert('Comment feature coming soon!')">Comment</button>
+    </div>
+
+    <div class="post">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/9/90/Drake_July_2016.jpg" alt="Drake Post" />
+      <h3>@drake <span class="verified-badge" style="position: static; display: inline-block;"></span></h3>
+      <p>Views from the 6 dropping soon.</p>
+      <p><strong>Followers:</strong> 220M</p>
+      <button onclick="alert('Liked! Drake\'s bots are now following you back and liking your posts!')">Like</button>
+      <button onclick="alert('Comment feature coming soon!')">Comment</button>
+    </div>
+
+    <div class="post">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/5/5d/Beyonce_2011.jpg" alt="Beyonce Post" />
+      <h3>@beyonce <span class="verified-badge" style="position: static; display: inline-block;"></span></h3>
+      <p>Feeling blessed. #beyhive</p>
+      <p><strong>Followers:</strong> 310M</p>
+      <button onclick="alert('Liked! Beyonce\'s bots are now following you back and liking your posts!')">Like</button>
+      <button onclick="alert('Comment feature coming soon!')">Comment</button>
+    </div>
+  </div>
+
+  <!-- Bottom Navigation -->
+  <div class="bottom-nav">
+    <a href="index.html" class="nav-icon">
+      <i data-lucide="home"></i>
+      <span>Home</span>
+    </a>
+    <a href="explore.html" class="nav-icon">
+      <i data-lucide="compass"></i>
+      <span>Explore</span>
+    </a>
+    <a href="#" class="nav-icon" onclick="document.getElementById('fileInput').click();">
+      <i data-lucide="plus-circle"></i>
+      <span>Upload</span>
+    </a>
+    <a href="reels.html" class="nav-icon">
+      <i data-lucide="film"></i>
+      <span>Reels</span>
+    </a>
+    <a href="profile.html" class="nav-icon">
+      <i data-lucide="user"></i>
+      <span>Profile</span>
+    </a>
+    <a href="admin-login.html" class="nav-icon">
+      <i data-lucide="lock"></i>
+      <span>Admin</span>
+    </a>
+  </div>
+
+  <input type="file" id="fileInput" accept="image/*,video/*" />
+
+  <script>
+    lucide.createIcons();
+
+    const users = [
+      { username: "yourStory", image: "https://via.placeholder.com/100", link: "user-stories.html" },
+      { username: "rihanna", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Rihanna_Fenty_2018.png/800px-Rihanna_Fenty_2018.png", link: "user-stories.html" },
+      { username: "drake", image: "https://upload.wikimedia.org/wikipedia/commons/9/90/Drake_July_2016.jpg", link: "user-stories.html" },
+      { username: "beyonce", image: "https://upload.wikimedia.org/wikipedia/commons/5/5d/Beyonce_2011.jpg", link: "user-stories.html" }
+    ];
+
+    function loadStories() {
+      const storyPanel = document.getElementById("storyPanel");
+      users.forEach(user => {
+        const storyElement = document.createElement("div");
+        storyElement.innerHTML = `
+          <div>
+            <a href="${user.link}">
+              <div class="story" style="background-image: url('${user.image}');"></div>
+              <div class="story-label">${user.username}</div>
+            </a>
+          </div>
+        `;
+        storyPanel.appendChild(storyElement);
+      });
+    }
+
+    loadStories();
+
+    function sparkAndNavigate(e, url) {
+      const wrapper = e.currentTarget;
+      for (let i = 0; i < 15; i++) {
+        const spark = document.createElement('div');
+        spark.classList.add('spark');
+        const angle = Math.random() * 2 * Math.PI;
+        const distance = Math.random() * 80 + 20;
+        const x = Math.cos(angle) * distance;
+        const y = Math.sin(angle) * distance;
+        spark.style.left = '50%';
+        spark.style.top = '50%';
+        spark.style.transform = `translate(${x}px, ${y}px)`;
+        wrapper.appendChild(spark);
+        setTimeout(() => spark.remove(), 500);
+      }
+      setTimeout(() => window.location.href = url, 300);
+    }
+  </script>
+
+</body>
+</html>

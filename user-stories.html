@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>User Stories</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Orbitron', sans-serif;
+      background-color: #121212;
+      color: #e0e0e0;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      overflow-y: auto;
+    }
+
+    .top-bar {
+      display: flex;
+      align-items: center;
+      padding: 1em;
+      border-bottom: 1px solid #333;
+      background-color: #1e1e1e;
+      justify-content: space-between;
+    }
+
+    .top-bar h1 {
+      margin: 0;
+      font-size: 1.2em;
+    }
+
+    .stories-container {
+      display: flex;
+      flex-direction: row;
+      overflow-x: scroll;
+      padding: 1em;
+      gap: 1em;
+      background-color: #1e1e1e;
+    }
+
+    .story {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .story:hover .profile-image {
+      border: 3px solid #00bcd4;
+    }
+
+    .profile-image {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background-image: url('https://via.placeholder.com/70'); /* Placeholder image */
+      background-size: cover;
+      background-position: center;
+      border: 3px solid #fff;
+      transition: border 0.3s ease;
+    }
+
+    .story-name {
+      margin-top: 0.5em;
+      font-size: 0.9em;
+      text-align: center;
+    }
+
+    .dashes {
+      margin-top: 0.5em;
+      width: 50px;
+      height: 3px;
+      background-color: #00bcd4;
+      border-radius: 2px;
+    }
+
+    .content {
+      padding: 2em;
+      background-color: #1e1e1e;
+      color: #e0e0e0;
+      text-align: center;
+      font-size: 1.5em;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      flex-direction: column;
+    }
+
+    .content.active {
+      opacity: 1;
+    }
+
+    .reply-section {
+      position: fixed;
+      bottom: 15%;
+      left: 50%; /* Center the reply box horizontally */
+      transform: translateX(-50%); /* Adjust for exact centering */
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: center;
+      opacity: 0.9;
+      transition: opacity 0.3s ease;
+      justify-content: center;
+      padding: 0 20px;
+      width: 90%; /* Adjust the width as necessary */
+    }
+
+    /* Updated Reply Box as Rounded Search Box */
+    .reply-box {
+      width: 100%; /* Make the reply box take up the full width of its container */
+      display: flex;
+      align-items: center;
+      background-color: rgba(255, 255, 255, 0.1); /* Slightly transparent */
+      border-radius: 25px; /* Rounded edges */
+      padding: 10px 15px;
+      backdrop-filter: blur(10px); /* Apply blur effect */
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    }
+
+    .reply-box textarea {
+      width: 100%;
+      background: transparent;
+      border: none;
+      color: #e0e0e0;
+      font-size: 1em;
+      outline: none;
+      resize: none;
+      padding: 5px 10px;
+      border-radius: 20px;
+    }
+
+    .reply-icon {
+      margin-left: 10px;
+      cursor: pointer;
+      color: #00bcd4;
+      font-size: 1.5em;
+    }
+
+    .bottom-nav {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background-color: #1e1e1e;
+      padding: 0.5em 0;
+      box-shadow: 0 -2px 5px rgba(0,0,0,0.5);
+    }
+
+    .nav-icon {
+      color: #e0e0e0;
+      text-align: center;
+      font-size: 0.75em;
+      text-decoration: none;
+    }
+
+    .nav-icon:hover {
+      color: #00bcd4;
+    }
+
+    .nav-icon svg {
+      width: 24px;
+      height: 24px;
+      display: block;
+      margin: 0 auto 4px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Stories Section -->
+  <div class="stories-container">
+    <div class="story" data-story-id="1">
+      <div class="profile-image" style="background-image: url('https://via.placeholder.com/70?text=1');"></div>
+      <div class="story-name">John Doe</div>
+      <div class="dashes"></div>
+    </div>
+    <div class="story" data-story-id="2">
+      <div class="profile-image" style="background-image: url('https://via.placeholder.com/70?text=2');"></div>
+      <div class="story-name">Jane Smith</div>
+      <div class="dashes"></div>
+    </div>
+    <div class="story" data-story-id="3">
+      <div class="profile-image" style="background-image: url('https://via.placeholder.com/70?text=3');"></div>
+      <div class="story-name">Alice Brown</div>
+      <div class="dashes"></div>
+    </div>
+  </div>
+
+  <!-- Story Content -->
+  <div class="content" id="storyContent">
+    <p>Select a story to view content.</p>
+  </div>
+
+  <!-- Reply Section -->
+  <div class="reply-section" id="replySection" style="display: none;">
+    <div class="reply-box">
+      <textarea id="replyInput" placeholder="Reply to this story..." rows="1"></textarea>
+      <i class="reply-icon" data-lucide="arrow-right-circle" onclick="sendReply()"></i>
+    </div>
+  </div>
+
+  <!-- Bottom Nav -->
+  <div class="bottom-nav">
+    <a href="index.html" class="nav-icon">
+      <i data-lucide="home"></i>
+      <span>Home</span>
+    </a>
+    <a href="explore.html" class="nav-icon">
+      <i data-lucide="compass"></i>
+      <span>Explore</span>
+    </a>
+    <a href="upload.html" class="nav-icon">
+      <i data-lucide="plus-circle"></i>
+      <span>Upload</span>
+    </a>
+    <a href="profile.html" class="nav-icon">
+      <i data-lucide="user"></i>
+      <span>Profile</span>
+    </a>
+  </div>
+
+  <script>
+    lucide.createIcons();
+
+    const stories = document.querySelectorAll('.story');
+    const storyContent = document.getElementById('storyContent');
+    const replySection = document.getElementById('replySection');
+    const replyInput = document.getElementById('replyInput');
+
+    // Story click event listener
+    stories.forEach(story => {
+      story.addEventListener('click', function () {
+        const storyId = this.getAttribute('data-story-id');
+        
+        // Set story content based on the clicked story ID
+        if (storyId === '1') {
+          storyContent.innerHTML = '<p>John Doe\'s Story Content.</p>';
+        } else if (storyId === '2') {
+          storyContent.innerHTML = '<p>Jane Smith\'s Story Content.</p>';
+        } else if (storyId === '3') {
+          storyContent.innerHTML = '<p>Alice Brown\'s Story Content.</p>';
+        }
+        
+        // Show the reply section and story content
+        replySection.style.display = 'flex';
+        storyContent.classList.add('active');
+      });
+    });
+
+    // Function to handle sending a reply
+    function sendReply() {
+      const replyText = replyInput.value.trim();
+      if (replyText) {
+        alert('Your reply has been sent: ' + replyText);
+        replyInput.value = ''; // Reset the input
+      } else {
+        alert('Please enter a reply.');
+      }
+    }
+  </script>
+
+</body>
+</html>

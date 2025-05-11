@@ -1,0 +1,26 @@
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1em;
+  border-bottom: 1px solid #333;
+}
+
+.page-title {
+  font-size: 1.5em;
+  margin: 0;
+}
+
+.settings-icon {
+  color: #e0e0e0;
+  text-decoration: none;
+}
+
+.settings-icon:hover {
+  color: #00bcd4;
+}
+
+.settings-icon svg {
+  width: 28px;
+  height: 28px;
+}

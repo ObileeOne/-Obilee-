@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Explore</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Orbitron', sans-serif;
+      background-color: #121212;
+      color: #e0e0e0;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      overflow-y: auto; /* Allow vertical scrolling */
+    }
+    .top-bar {
+      display: flex;
+      align-items: center;
+      padding: 1em;
+      border-bottom: 1px solid #333;
+      background-color: #1e1e1e;
+    }
+    .search-bar {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      background-color: #333;
+      border-radius: 25px;
+      padding: 0.5em 1em;
+    }
+    .search-bar input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      outline: none;
+      color: #e0e0e0;
+      font-size: 1em;
+    }
+    .search-bar i {
+      color: #aaa;
+      margin-right: 8px;
+    }
+    .search-results {
+      background-color: #1e1e1e;
+      border-radius: 10px;
+      padding: 1em;
+      margin-top: 1em;
+      display: none;
+    }
+    .search-results div {
+      padding: 0.5em;
+      border-bottom: 1px solid #333;
+      color: #ccc;
+    }
+    .search-results div:last-child {
+      border-bottom: none;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      margin-top: 2px;
+      flex: 1;
+    }
+    .grid img {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+      cursor: pointer;
+    }
+    .bottom-nav {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background-color: #1e1e1e;
+      padding: 0.5em 0;
+      box-shadow: 0 -2px 5px rgba(0,0,0,0.5);
+    }
+    .nav-icon {
+      color: #e0e0e0;
+      text-align: center;
+      font-size: 0.75em;
+      text-decoration: none;
+    }
+    .nav-icon:hover {
+      color: #00bcd4;
+    }
+    .nav-icon svg {
+      width: 24px;
+      height: 24px;
+      display: block;
+      margin: 0 auto 4px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Bar with Search -->
+  <div class="top-bar">
+    <div class="search-bar">
+      <i data-lucide="search"></i>
+      <input type="text" placeholder="Search" id="searchInput" />
+    </div>
+  </div>
+
+  <!-- Search Results -->
+  <div class="search-results" id="searchResults"></div>
+
+  <!-- Explore Grid -->
+  <div class="grid">
+    <!-- Example images -->
+    <img src="https://source.unsplash.com/random/300x300?sig=1" alt="Explore 1">
+    <img src="https://source.unsplash.com/random/300x300?sig=2" alt="Explore 2">
+    <img src="https://source.unsplash.com/random/300x300?sig=3" alt="Explore 3">
+    <img src="https://source.unsplash.com/random/300x300?sig=4" alt="Explore 4">
+    <img src="https://source.unsplash.com/random/300x300?sig=5" alt="Explore 5">
+    <img src="https://source.unsplash.com/random/300x300?sig=6" alt="Explore 6">
+    <img src="https://source.unsplash.com/random/300x300?sig=7" alt="Explore 7">
+    <img src="https://source.unsplash.com/random/300x300?sig=8" alt="Explore 8">
+    <img src="https://source.unsplash.com/random/300x300?sig=9" alt="Explore 9">
+  </div>
+
+  <!-- Bottom Nav -->
+<div class="bottom-nav">
+  <a href="index-replica.html" class="nav-icon">
+    <i data-lucide="home"></i>
+    <span>Home</span>
+  </a>
+  <a href="explore-replica.html" class="nav-icon">
+    <i data-lucide="compass"></i>
+    <span>Explore</span>
+  </a>
+  
+  <!-- Upload Button -->
+  <a href="#" class="nav-icon" onclick="document.getElementById('fileInput').click();">
+    <i data-lucide="plus-circle"></i>
+    <span>Upload</span>
+  </a>
+
+  <!-- Reels Button (Moved left of Profile) -->
+  <a href="reels.html" class="nav-icon">
+    <i data-lucide="film"></i>
+    <span>Reels</span>
+  </a>
+
+  <!-- Profile Button -->
+  <a href="profile-replica.html" class="nav-icon">
+    <i data-lucide="user"></i>
+    <span>Profile</span>
+  </div>
+
+<!-- Hidden File Input for Upload Button -->
+<input type="file" id="fileInput" style="display:none" />
+
+  <script>
+    lucide.createIcons();
+
+    // Simulating an array of profiles for the search results
+    const profiles = [
+      "bot_user1",
+      "bot_user2",
+      "bot_user3",
+      "bot_user4",
+      "john_doe",
+      "jane_smith",
+      "alex_123",
+      "mia_williams",
+      "charlie_brown",
+      "david_jones"
+    ];
+
+    // Search function to filter profiles based on input
+    document.getElementById('searchInput').addEventListener('input', function () {
+      const query = this.value.toLowerCase();
+      const filteredProfiles = profiles.filter(profile => profile.toLowerCase().includes(query));
+      
+      // Show search results if query matches
+      const resultsContainer = document.getElementById('searchResults');
+      resultsContainer.innerHTML = ''; // Clear previous results
+      if (query) {
+        filteredProfiles.forEach(profile => {
+          const resultItem = document.createElement('div');
+          const profileLink = document.createElement('a');
+          profileLink.href = `user-profile.html?username=${profile}`;
+          profileLink.textContent = profile;
+          resultItem.appendChild(profileLink);
+          resultsContainer.appendChild(resultItem);
+        });
+        resultsContainer.style.display = 'block';
+      } else {
+        resultsContainer.style.display = 'none';
+      }
+    });
+  </script>
+
+</body>
+</html>

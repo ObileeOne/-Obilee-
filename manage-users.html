@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Manage Users</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Orbitron', sans-serif;
+      background-color: #121212;
+      color: #e0e0e0;
+      padding: 1em;
+    }
+    h2 {
+      text-align: center;
+      margin-top: 1.5em;
+    }
+    .user-action {
+      background: #1e1e1e;
+      padding: 1em;
+      border-radius: 10px;
+      margin: 1em 0;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+    }
+    button {
+      background: #333;
+      border: none;
+      color: #e0e0e0;
+      padding: 0.5em 1em;
+      margin: 0.25em;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #00bcd4;
+    }
+    .appeals-section {
+      margin-top: 2em;
+      background-color: #333;
+      padding: 1em;
+      border-radius: 10px;
+    }
+    .appeal {
+      background-color: #444;
+      padding: 1em;
+      margin-bottom: 1em;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+    .appeal button {
+      background-color: #00bcd4;
+      color: #121212;
+      border: none;
+      padding: 0.5em 1.5em;
+      margin: 0.5em;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .appeal button:hover {
+      background-color: #0199a8;
+    }
+    .back-button {
+      display: block;
+      margin: 2em auto 1em auto;
+      text-align: center;
+      background-color: #00bcd4;
+      color: #121212;
+      padding: 0.5em 1.5em;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .back-button:hover {
+      background-color: #0199a8;
+    }
+    .back-arrow {
+      position: absolute;
+      top: 1em;
+      left: 1em;
+      background: none;
+      border: none;
+      color: #00bcd4;
+      font-size: 1.5em;
+      cursor: pointer;
+      transition: color 0.2s ease;
+    }
+    .back-arrow:hover {
+      color: #0199a8;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Back Arrow Button -->
+  <button class="back-arrow" onclick="window.location.href='admin.html'">&#8592;</button>
+
+  <h2>Manage Users</h2>
+
+  <div class="user-action">
+    <p>User: <strong>@exampleuser</strong></p>
+    <button onclick="alert('User banned')">Ban User</button>
+    <button onclick="alert('User verified')">Verify User</button>
+    <button onclick="alert('Limits updated')">Set Follow/Like Limits</button>
+    <button onclick="alert('Verification code sent to email')">Send Verification Code</button>
+    <button onclick="unbanUser('@exampleuser')">Unban User</button>
+  </div>
+
+  <!-- NEW: Banned Users and Offenses Section -->
+  <div id="bannedUsersContainer" class="appeals-section">
+    <h3>Banned Users and Offenses</h3>
+  </div>
+
+  <!-- Bottom Back Button -->
+  <button class="back-button" onclick="window.location.href='admin.html'">Back to Admin Panel</button>
+
+  <!-- JavaScript Section -->
+  <script>
+    function unbanUser(username) {
+      alert('User ' + username + ' has been unbanned.');
+      // Add unban logic here
+    }
+
+    function approveAppeal(username) {
+      alert("Appeal approved for @" + username);
+      // Add logic to update DB and unban user
+    }
+
+    function denyAppeal(username) {
+      alert("Appeal denied for @" + username);
+      // Add logic to update DB or notify
+    }
+
+    async function loadBannedUsers() {
+      try {
+        const response = await fetch("/api/banned-users");
+        const users = await response.json();
+
+        const container = document.getElementById("bannedUsersContainer");
+
+        users.forEach(user => {
+          const div = document.createElement("div");
+          div.className = "appeal";
+          div.innerHTML = `
+            <p>
+              <strong>@${user.username}</strong> was banned on ${new Date(user.timestamp).toLocaleString()}<br>
+              <strong>Reason:</strong> ${user.reason}<br>
+              <strong>Content:</strong> "${user.content}"<br>
+            </p>
+            <div>
+              <button onclick="approveAppeal('${user.username}')">Approve Appeal</button>
+              <button onclick="denyAppeal('${user.username}')">Deny Appeal</button>
+            </div>
+          `;
+          container.appendChild(div);
+        });
+      } catch (error) {
+        console.error("Failed to load banned users:", error);
+      }
+    }
+
+    loadBannedUsers();
+  </script>
+
+</body>
+</html>

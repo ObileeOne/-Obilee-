@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>User Profile</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Orbitron', sans-serif;
+      background-color: #121212;
+      color: #e0e0e0;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      overflow-y: auto;
+    }
+    .top-bar {
+      display: flex;
+      align-items: center;
+      padding: 1em;
+      border-bottom: 1px solid #333;
+      background-color: #1e1e1e;
+    }
+    .profile-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 1em;
+      text-align: center;
+      flex-direction: column;
+    }
+    .profile-info {
+      margin-top: 1em;
+    }
+    .profile-info h2 {
+      margin: 0;
+    }
+    .stats {
+      display: flex;
+      justify-content: center;
+      margin-top: 1em;
+      gap: 1em;
+    }
+    .stats div {
+      text-align: center;
+      cursor: pointer;
+    }
+    .stats div:hover {
+      color: #00bcd4;
+    }
+    .follow-button {
+      background-color: #00bcd4;
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 25px;
+      cursor: pointer;
+      margin-top: 1em;
+      font-size: 1em;
+    }
+    .follow-button.followed {
+      background-color: #888;
+    }
+    .message-button {
+      background-color: #888; /* Set the message button to grey */
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 25px;
+      cursor: pointer;
+      margin-top: 1em;
+    }
+    /* Profile Image Section */
+    .profile-image-container {
+      position: relative;
+      display: inline-block;
+      cursor: pointer;
+    }
+
+    .profile-image {
+      width: 120px; /* Instagram-sized profile picture */
+      height: 120px; /* Instagram-sized profile picture */
+      border-radius: 50%;
+      background-image: url('https://via.placeholder.com/120'); /* Placeholder image */
+      background-size: cover;
+      background-position: center;
+      border: 3px solid #fff; /* Default border */
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      transition: border 0.3s ease, transform 0.3s ease;
+    }
+
+    /* Thicker, animated border for profile image */
+    .story-highlight-border {
+      position: absolute;
+      width: 150px; /* 30px bigger than the profile picture for the highlight circle */
+      height: 150px;
+      border-radius: 50%;
+      border: 6px solid #00bcd4; /* Thicker blue border for the highlight */
+      top: -15px;
+      left: -15px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      opacity: 0; /* Hidden by default */
+      transition: all 0.5s ease-in-out;
+      transform-origin: center center; /* Set transform origin for rotation */
+    }
+
+    /* Animation for the circular border */
+    .profile-image-container.clicked .story-highlight-border {
+      opacity: 1;
+      transform: rotate(-360deg); /* Rotate counterclockwise */
+      transition: transform 0.7s cubic-bezier(0.42, 0, 0.58, 1); /* Spring-like bounce effect */
+    }
+
+    .bottom-nav {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background-color: #1e1e1e;
+      padding: 0.5em 0;
+      box-shadow: 0 -2px 5px rgba(0,0,0,0.5);
+    }
+    .nav-icon {
+      color: #e0e0e0;
+      text-align: center;
+      font-size: 0.75em;
+      text-decoration: none;
+    }
+    .nav-icon:hover {
+      color: #00bcd4;
+    }
+    .nav-icon svg {
+      width: 24px;
+      height: 24px;
+      display: block;
+      margin: 0 auto 4px;
+    }
+    /* Scrollable content for posts section */
+    .posts-section {
+      margin-top: 2em;
+      background-color: #1e1e1e;
+      padding: 20px;
+      border-radius: 10px;
+      color: #e0e0e0;
+      height: 1000px; /* To simulate enough content to scroll */
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <h1>User Profile</h1>
+  </div>
+
+  <!-- User Profile Content -->
+  <div class="profile-container">
+    <!-- Profile Image with clickable effect -->
+    <a href="user-stories.html" class="profile-image-container">
+      <div class="story-highlight-border"></div> <!-- Blue circle for story highlights -->
+      <div class="profile-image"></div>
+    </a>
+
+    <div class="profile-info">
+      <h2 id="userName">User Name</h2>
+      <p id="userBio">This is the user's bio...</p>
+    </div>
+
+    <div class="stats">
+      <div id="postCountDiv">
+        <strong id="postCount">0</strong>
+        <p>Posts</p>
+      </div>
+      <div id="followerCountDiv">
+        <strong id="followerCount">0</strong>
+        <p>Followers</p>
+      </div>
+      <div id="followingCountDiv">
+        <strong id="followingCount">0</strong>
+        <p>Following</p>
+      </div>
+    </div>
+
+    <button class="follow-button" id="followButton">Follow</button>
+    <button class="message-button">Message</button>
+  </div>
+
+  <!-- Posts Section to Scroll -->
+  <div class="posts-section" id="postsSection">
+    <h3>Posts Section</h3>
+    <p>Here you can display user posts. This section will be long enough to enable scrolling.</p>
+    <p>More content...</p>
+    <p>More content...</p>
+    <p>More content...</p>
+    <p>More content...</p>
+    <p>More content...</p>
+    <p>More content...</p>
+    <p>More content...</p>
+  </div>
+
+  <!-- Bottom Nav -->
+  <div class="bottom-nav">
+    <a href="index.html" class="nav-icon">
+      <i data-lucide="home"></i>
+      <span>Home</span>
+    </a>
+    <a href="explore.html" class="nav-icon">
+      <i data-lucide="compass"></i>
+      <span>Explore</span>
+    </a>
+    <a href="upload.html" class="nav-icon">
+      <i data-lucide="plus-circle"></i>
+      <span>Upload</span>
+    </a>
+    <a href="profile.html" class="nav-icon">
+      <i data-lucide="user"></i>
+      <span>Profile</span>
+    </a>
+    <a href="admin-login.html" class="nav-icon">
+      <i data-lucide="lock"></i>
+      <span>Admin</span>
+    </a>
+  </div>
+
+  <script>
+    lucide.createIcons();
+
+    // Simulate user profile data
+    const userProfile = {
+      userName: "john_doe",
+      userBio: "This is John Doe's bio. He loves programming and coffee.",
+      postCount: 123,
+      followerCount: 456,
+      followingCount: 789,
+    };
+
+    // Populate the profile page with data
+    document.getElementById("userName").textContent = userProfile.userName;
+    document.getElementById("userBio").textContent = userProfile.userBio;
+    document.getElementById("postCount").textContent = userProfile.postCount;
+    document.getElementById("followerCount").textContent = userProfile.followerCount;
+    document.getElementById("followingCount").textContent = userProfile.followingCount;
+
+    // Handle follow/unfollow button
+    const followButton = document.getElementById("followButton");
+    followButton.addEventListener("click", function () {
+      if (followButton.classList.contains("followed")) {
+        followButton.classList.remove("followed");
+        followButton.textContent = "Follow";
+      } else {
+        followButton.classList.add("followed");
+        followButton.textContent = "Following";
+      }
+    });
+
+    // Handle click for posts, followers, and following
+    document.getElementById("postCountDiv").addEventListener("click", function () {
+      document.getElementById("postsSection").scrollIntoView({ behavior: "smooth" });
+    });
+
+    document.getElementById("followerCountDiv").addEventListener("click", function () {
+      window.location.href = "followers.html";
+    });
+
+    document.getElementById("followingCountDiv").addEventListener("click", function () {
+      window.location.href = "following.html";
+    });
+
+    // Handle the profile image click for animation and redirection
+    document.querySelector(".profile-image-container").addEventListener("click", function () {
+      const profileImageContainer = this;
+
+      // Add the 'clicked' class to initiate the animation
+      profileImageContainer.classList.add("clicked");
+
+      // Redirect after the animation (e.g., 1 second delay for the animation)
+      setTimeout(function () {
+        window.location.href = "user-stories.html"; // Redirect to user's stories page
+      }, 1000); // Adjust timing to match the animation duration
+    });
+  </script>
+
+</body>
+</html>

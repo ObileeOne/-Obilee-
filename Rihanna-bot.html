@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>badgalriri - Profile</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Orbitron', sans-serif;
+      background-color: #121212;
+      color: #e0e0e0;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      padding: 0.5em 1em;
+      background-color: #1e1e1e;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    }
+    .header .back-arrow {
+      font-size: 1.5em;
+      font-weight: bold;
+      margin-right: 10px;
+      cursor: pointer;
+    }
+    .header h1 {
+      margin: 0;
+      font-size: 1.2em;
+    }
+    .profile {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 1em;
+    }
+    .profile-img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background-size: cover;
+      background-position: center;
+      border: 3px solid #ff5722;
+      position: relative;
+    }
+    .verified-badge {
+      position: absolute;
+      bottom: -5px;
+      right: -5px;
+      width: 24px;
+      height: 24px;
+      background-color: #0095f6;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 0 2px #121212;
+    }
+    .verified-badge::before {
+      content: '✔';
+      color: white;
+      font-size: 14px;
+      font-weight: bold;
+    }
+    .profile-info {
+      text-align: center;
+      margin-top: 10px;
+    }
+    .profile-info h2 {
+      margin: 0;
+      font-size: 1.2em;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .profile-info .title {
+      font-size: 1em;
+      color: #f7f7f7;
+    }
+    .stats {
+      display: flex;
+      gap: 20px;
+      margin-top: 10px;
+    }
+    .bio {
+      padding: 0 1em;
+      margin-bottom: 1em;
+      text-align: center;
+    }
+    .posts-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 5px;
+      padding: 1em;
+    }
+    .posts-grid img {
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      border-radius: 5px;
+    }
+    .follow-btn {
+      background-color: #0095f6;
+      color: white;
+      border: none;
+      padding: 0.5em 1em;
+      border-radius: 5px;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+    .follow-btn.following {
+      background-color: #ccc;
+    }
+    .follow-btn:hover:not(.following) {
+      background-color: #007ac1;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <span class="back-arrow" onclick="window.history.back()">←</span>
+    <h1>badgalriri</h1>
+  </div>
+
+  <div class="profile">
+    <div class="profile-img" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Rihanna_Fenty_2018.png/800px-Rihanna_Fenty_2018.png');">
+      <div class="verified-badge"></div>
+    </div>
+    <div class="profile-info">
+      <h2>badgalriri</h2>
+      <div class="title">Artist</div>
+      <div class="stats">
+        <div><strong id="followers">254M</strong> Followers</div>
+        <div><strong id="following">1600</strong> Following</div>
+        <div><strong>450</strong> Posts</div>
+      </div>
+      <button class="follow-btn" onclick="toggleFollow()">Follow</button>
+    </div>
+  </div>
+
+  <div class="bio">
+    Singer. Entrepreneur. Fashion Icon. Founder of Fenty Beauty. #NAVY
+  </div>
+
+  <div class="posts-grid">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/f/fb/Rihanna_Fenty_2018.png" alt="Post 1">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/f/fb/Rihanna_Fenty_2018.png" alt="Post 2">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/f/fb/Rihanna_Fenty_2018.png" alt="Post 3">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/f/fb/Rihanna_Fenty_2018.png" alt="Post 4">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/f/fb/Rihanna_Fenty_2018.png" alt="Post 5">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/f/fb/Rihanna_Fenty_2018.png" alt="Post 6">
+  </div>
+
+  <script>
+    lucide.createIcons();
+
+    let isFollowing = false;
+
+    function toggleFollow() {
+      isFollowing = !isFollowing;
+      
+      const followButton = document.querySelector('.follow-btn');
+      const followersCount = document.getElementById('followers');
+      const followingCount = document.getElementById('following');
+
+      if (isFollowing) {
+        followButton.textContent = 'Following';
+        followButton.classList.add('following');
+        followersCount.textContent = (parseInt(followersCount.textContent.replace('M', '')) + 1) + 'M';
+        followingCount.textContent = (parseInt(followingCount.textContent) + 1);
+      } else {
+        followButton.textContent = 'Follow';
+        followButton.classList.remove('following');
+        followersCount.textContent = (parseInt(followersCount.textContent.replace('M', '')) - 1) + 'M';
+        followingCount.textContent = (parseInt(followingCount.textContent) - 1);
+      }
+    }
+  </script>
+
+</body>
+</html>

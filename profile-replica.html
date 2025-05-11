@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Profile</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Orbitron', sans-serif;
+      background-color: #121212;
+      color: #e0e0e0;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1em;
+      border-bottom: 1px solid #333;
+    }
+    .page-title {
+      font-size: 1.5em;
+      margin: 0;
+    }
+    .settings-icon {
+      color: #e0e0e0;
+      text-decoration: none;
+      cursor: pointer;
+      position: relative;
+    }
+    .settings-icon:hover {
+      color: #00bcd4;
+    }
+    .settings-icon svg {
+      width: 28px;
+      height: 28px;
+    }
+
+    /* Dropdown Menu Styles */
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      top: 30px;
+      right: 0;
+      background-color: #1e1e1e;
+      min-width: 150px;
+      border-radius: 5px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+      text-align: center;
+    }
+    .dropdown-menu a {
+      color: #e0e0e0;
+      text-decoration: none;
+      padding: 10px;
+      display: block;
+    }
+    .dropdown-menu a:hover {
+      background-color: #00bcd4;
+    }
+
+    .content {
+      flex: 1;
+      padding: 1em;
+      padding-bottom: 80px;
+      text-align: center;
+    }
+    .profile-pic {
+      position: relative;
+      margin: 0 auto 1em;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background-color: #333;
+      background-size: cover;
+      background-position: center;
+    }
+    .add-icon {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      background-color: #00bcd4;
+      border-radius: 50%;
+      padding: 5px;
+      cursor: pointer;
+    }
+    button {
+      background-color: #333;
+      color: #e0e0e0;
+      border: none;
+      padding: 0.5em 1em;
+      margin: 0.5em;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #00bcd4;
+    }
+
+    /* Line Under Buttons */
+    .line {
+      margin: 20px 0;
+      border-top: 2px solid #333;
+    }
+
+    /* Create New Post Button */
+    .create-post-btn {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background-color: #ffffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 2em;
+      color: #00bcd4;
+      margin: 30px auto;
+      position: relative;
+      cursor: pointer;
+    }
+    .create-post-btn span {
+      position: absolute;
+      bottom: -20px;
+      font-size: 0.8em;
+      color: #e0e0e0;
+    }
+
+    /* Bottom Nav */
+    .bottom-nav {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background-color: #1e1e1e;
+      padding: 0.5em 0;
+      box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.5);
+    }
+    .nav-icon {
+      color: #e0e0e0;
+      text-align: center;
+      font-size: 0.75em;
+      text-decoration: none;
+    }
+    .nav-icon:hover {
+      color: #00bcd4;
+    }
+    .nav-icon svg {
+      width: 24px;
+      height: 24px;
+      display: block;
+      margin: 0 auto 4px;
+    }
+
+    /* Logout Popup */
+    .logout-popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: rgba(30, 30, 30, 0.95);
+      padding: 20px 40px;
+      border-radius: 10px;
+      text-align: center;
+      color: #00bcd4;
+      font-size: 1.2em;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      z-index: 9999;
+    }
+    .logout-popup.show {
+      display: block;
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Bar with title and settings icon -->
+  <div class="top-bar">
+    <h2 class="page-title">Profile</h2>
+    <div class="settings-icon" onclick="toggleDropdown()">
+      <i data-lucide="more-vertical"></i>
+      <div class="dropdown-menu" id="dropdownMenu">
+        <a href="user-settings.html">Settings</a>
+        <a href="#" onclick="logout()">Log Out</a>
+        <a href="delete-account.html" onclick="deleteAccount()">Delete Account</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="profile-pic" id="profilePic" style="background-image: url('https://via.placeholder.com/100');">
+      <div class="add-icon" onclick="document.getElementById('fileInput').click();">
+        <i data-lucide="plus"></i>
+      </div>
+    </div>
+    <input type="file" id="fileInput" style="display: none;" onchange="changeProfilePic(event)">
+    <h2>@your_username</h2>
+    <button onclick="alert('Edit Profile clicked')">Edit Profile</button>
+    <button onclick="alert('Share Profile clicked')">Share Profile</button>
+
+    <!-- Line under buttons -->
+    <div class="line"></div>
+
+    <!-- Create Post Button -->
+    <div id="createPostBtn" class="create-post-btn" onclick="openFilePicker()">
+      <i data-lucide="plus"></i>
+      <span>""</span>
+    </div>
+    
+    <!-- Create New Post -->
+    <div id="noPostsMessage" style="display: none;">Create New Post</div>
+  </div>
+
+  <!-- Bottom Nav -->
+  <div class="bottom-nav">
+    <a href="index-replica.html" class="nav-icon">
+      <i data-lucide="home"></i>
+      <span>Home</span>
+    </a>
+    <a href="explore-replica.html" class="nav-icon">
+      <i data-lucide="compass"></i>
+      <span>Explore</span>
+    </a>
+    <a href="#" class="nav-icon" onclick="openFilePicker()">
+      <i data-lucide="plus-circle"></i>
+      <span>Upload</span>
+    </a>
+    <a href="reels.html" class="nav-icon">
+      <i data-lucide="film"></i>
+      <span>Reels</span>
+    </a>
+    <a href="profile-replica.html" class="nav-icon">
+      <i data-lucide="user"></i>
+      <span>Profile</span>
+    </a>
+  </div>
+
+  <!-- Logout Popup -->
+  <div class="logout-popup" id="logoutPopup">Logging out...</div>
+
+  <script>
+    lucide.createIcons();
+
+    let hasPosted = false; // Flag to track if the user has posted
+
+    // Function to handle profile pic change
+    function changeProfilePic(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          document.getElementById('profilePic').style.backgroundImage = `url('${e.target.result}')`;
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    // Toggle the dropdown menu
+    function toggleDropdown() {
+      const dropdown = document.getElementById('dropdownMenu');
+      dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+    }
+
+    // Log out function with popup
+    function logout() {
+      const popup = document.getElementById('logoutPopup');
+      popup.classList.add('show');
+      setTimeout(() => {
+        popup.classList.remove('show');
+        window.location.href = 'login.html';
+      }, 1500); // Show popup for 1.5 seconds before redirect
+    }
+
+    // Delete account function
+    function deleteAccount() {
+      const confirmation = confirm('Are you sure you want to delete your account? This action cannot be undone.');
+      if (confirmation) {
+        alert('Account deletion requested');
+        // Add logic to delete account or notify admin
+      }
+    }
+
+    // Function to create a new post
+    function openFilePicker() {
+      document.getElementById('fileInput').click();
+    }
+
+    // Show "No Post Available" if no posts
+    function checkPostAvailability() {
+      if (!hasPosted) {
+        document.getElementById('noPostsMessage').style.display = 'block';
+      }
+    }
+
+    // Call the check function initially
+    checkPostAvailability();
+  </script>
+
+</body>
+</html>

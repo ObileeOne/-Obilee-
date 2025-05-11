@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>𓆣 Obilee - Splash Screen</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Orbitron', sans-serif;
+      background-color: #121212;
+      color: #e0e0e0;
+      overflow: hidden;
+    }
+
+    .splash-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #121212;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      visibility: visible;
+      opacity: 1;
+      transition: opacity 1s ease-out;
+    }
+
+    .splash-screen.hidden {
+      visibility: hidden;
+      opacity: 0;
+    }
+
+    .splash-content {
+      text-align: center;
+    }
+
+    .splash-content h1 {
+      font-size: 3em;
+      color: #00bcd4;
+    }
+
+    .logo {
+      font-size: 5em;
+      color: #fff;
+      margin-top: 20px;
+      animation: fadeIn 2s ease-in-out infinite;
+    }
+
+    @keyframes fadeIn {
+      0% { opacity: 0; }
+      50% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+
+    #mainContent {
+      display: none;
+      text-align: center;
+      padding: 50px;
+    }
+
+    .main-logo {
+      font-size: 4em;
+      color: #00bcd4;
+      margin-bottom: 20px;
+    }
+
+    #mainContent h1 {
+      color: #fff;
+    }
+
+    .link {
+      margin-top: 20px;
+      display: none;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+
+    .link a {
+      color: #00bcd4;
+      text-decoration: none;
+      font-size: 1.2em;
+      font-weight: bold;
+    }
+
+    .link a:hover {
+      text-decoration: underline;
+    }
+
+    .typed-text {
+      font-size: 1.5em;
+      color: #fff;
+      white-space: nowrap;
+      overflow: hidden;
+      width: 0;
+      margin-bottom: 10px;
+      animation: typing 4s steps(40) 1s forwards, blink-caret 0.75s step-end infinite;
+    }
+
+    @keyframes typing {
+      0% { width: 0; }
+      100% { width: 100%; }
+    }
+
+    @keyframes blink-caret {
+      50% { border-color: transparent; }
+    }
+
+    .typed-text-container {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .typed-text-line {
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Splash Screen -->
+  <div class="splash-screen" id="splashScreen">
+    <div class="splash-content">
+      <h1>Obilee</h1>
+      <div class="logo">𓆣</div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div id="mainContent">
+    <div class="main-logo">𓆣</div> <!-- Added icon above welcome -->
+    <h1>Welcome to Obilee!</h1>
+    <div class="typed-text-container" id="typedTextContainer"></div>
+    <div class="link" id="loginLink">
+      <a href="login.html">Click here to login</a>
+    </div>
+  </div>
+
+  <script>
+    window.onload = function() {
+      const splashScreen = document.getElementById('splashScreen');
+      const mainContent = document.getElementById('mainContent');
+      const typedTextContainer = document.getElementById('typedTextContainer');
+      const loginLink = document.getElementById('loginLink');
+
+      setTimeout(function() {
+        splashScreen.classList.add('hidden');
+        mainContent.style.display = 'block';
+      }, 3000);
+
+      const experienceTextLines = [
+        "Experience a new way to connect,",
+        "explore, and interact with others",
+        "in an innovative environment."
+      ];
+
+      let lineIndex = 0;
+
+      function typeWriter() {
+        if (lineIndex < experienceTextLines.length) {
+          const line = document.createElement('div');
+          line.classList.add('typed-text-line');
+          typedTextContainer.appendChild(line);
+          let charIndex = 0;
+
+          function typeLine() {
+            if (charIndex < experienceTextLines[lineIndex].length) {
+              line.textContent += experienceTextLines[lineIndex].charAt(charIndex);
+              charIndex++;
+              setTimeout(typeLine, 100);
+            } else {
+              lineIndex++;
+              setTimeout(typeWriter, 1000);
+            }
+          }
+
+          typeLine();
+        } else {
+          setTimeout(function() {
+            loginLink.style.display = 'block';
+            loginLink.style.opacity = 1;
+          }, 500);
+        }
+      }
+
+      typeWriter();
+    };
+  </script>
+
+</body>
+</html>

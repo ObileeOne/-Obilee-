@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>VeriBot - Email Verification</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Orbitron', sans-serif;
+      background-color: #121212;
+      color: #ffffff;
+    }
+    header {
+      background-color: #000000;
+      padding: 1em;
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid #333;
+      color: white;
+      font-size: 1.2em;
+      position: relative;
+    }
+    .back-arrow {
+      font-weight: bold;
+      font-size: 1.5em;
+      color: #ffffff;
+      cursor: pointer;
+      position: absolute;
+      left: 1em;
+      top: 1em;
+    }
+    .container {
+      max-width: 600px;
+      margin: 3em auto;
+      padding: 2em;
+      background-color: #1a1a1a;
+      border-radius: 8px;
+    }
+    .request-item {
+      padding: 1em;
+      margin-bottom: 1em;
+      background-color: #333;
+      border-radius: 5px;
+    }
+    button {
+      background-color: #4caf50;
+      color: white;
+      padding: 0.8em;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 100%;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    #verificationMessage {
+      color: #fbc02d;
+      font-size: 0.9em;
+      margin-top: 1em;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <span class="back-arrow" onclick="redirectToAdminPanel()">&larr;</span>
+    <span style="margin: 0 auto;">VeriBot</span>
+  </header>
+
+  <div class="container">
+    <div class="request-item">
+      <span>User: johndoe123</span><br />
+      <span>Current Email: johndoe@example.com</span><br />
+      <span>Requested New Email: johndoe_new@example.com</span><br />
+      <button onclick="sendVerificationCode('johndoe_new@example.com', 'johndoe123')">Send Verification Code</button>
+    </div>
+    <div class="request-item">
+      <span>User: janedoe456</span><br />
+      <span>Current Email: janedoe@example.com</span><br />
+      <span>Requested New Email: janedoe_new@example.com</span><br />
+      <button onclick="sendVerificationCode('janedoe_new@example.com', 'janedoe456')">Send Verification Code</button>
+    </div>
+    <div id="verificationMessage"></div>
+  </div>
+
+  <script>
+    let verificationCodes = {};
+
+    function redirectToAdminPanel() {
+      window.location.href = 'admin.html';
+    }
+
+    function sendVerificationCode(newEmail, username) {
+      const code = generateCode();
+      const timestamp = Date.now();
+
+      verificationCodes[username] = { code: code, timestamp: timestamp };
+
+      alert(`Verification code sent to ${newEmail}: ${code}`);
+      document.getElementById('verificationMessage').innerText = `Verification code sent to ${newEmail}.`;
+
+      // Code expires after 30 minutes
+      setTimeout(() => {
+        delete verificationCodes[username];
+      }, 1800000);
+    }
+
+    function generateCode() {
+      return Math.floor(100000 + Math.random() * 900000);
+    }
+
+    function verifyCode(username, enteredCode) {
+      const verification = verificationCodes[username];
+      if (!verification) {
+        alert("No pending verification found for this user.");
+        return;
+      }
+
+      const now = Date.now();
+      const expiration = verification.timestamp + 1800000;
+
+      if (now > expiration) {
+        alert("Verification code expired.");
+        delete verificationCodes[username];
+        return;
+      }
+
+      if (verification.code.toString() === enteredCode) {
+        alert("Email verified successfully.");
+        delete verificationCodes[username];
+      } else {
+        alert("Invalid code. Try again.");
+      }
+    }
+  </script>
+</body>
+</html>

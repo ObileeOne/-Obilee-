@@ -1,0 +1,109 @@
+body {
+  margin: 0;
+  font-family: 'Orbitron', sans-serif;
+  background-color: #121212;
+  color: #e0e0e0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  overflow-y: auto;
+}
+
+.top-bar {
+  display: flex;
+  align-items: center;
+  padding: 1em;
+  border-bottom: 1px solid #333;
+  background-color: #1e1e1e;
+}
+
+.profile-container {
+  padding: 1em;
+  text-align: center;
+}
+
+.profile-container img {
+  border-radius: 50%; /* Makes the profile picture a circle */
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+}
+
+.profile-info {
+  margin-top: 1em;
+}
+
+.profile-info h2 {
+  margin: 0;
+}
+
+.stats {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 1em;
+}
+
+.stats div {
+  text-align: center;
+  cursor: pointer;
+}
+
+.stats div:hover {
+  color: #00bcd4;
+}
+
+.follow-button {
+  background-color: #00bcd4;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 25px;
+  cursor: pointer;
+  margin-top: 1em;
+  font-size: 1em;
+}
+
+.follow-button.followed {
+  background-color: #888;
+}
+
+/* Grey message button */
+.message-button {
+  background-color: #888; /* Change the background to grey */
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 25px;
+  cursor: pointer;
+  margin-top: 1em;
+}
+
+.bottom-nav {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #1e1e1e;
+  padding: 0.5em 0;
+  box-shadow: 0 -2px 5px rgba(0,0,0,0.5);
+}
+
+.nav-icon {
+  color: #e0e0e0;
+  text-align: center;
+  font-size: 0.75em;
+  text-decoration: none;
+}
+
+.nav-icon:hover {
+  color: #00bcd4;
+}
+
+.nav-icon svg {
+  width: 24px;
+  height: 24px;
+  display: block;
+  margin: 0 auto 4px;
+}

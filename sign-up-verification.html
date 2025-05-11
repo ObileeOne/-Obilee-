@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sign up for Paid Verification Badge</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Orbitron', sans-serif;
+      background-color: #121212;
+      color: #ffffff;
+    }
+    header {
+      background-color: #000000;
+      padding: 1em;
+      text-align: left;
+      color: white;
+      font-size: 1.2em;
+      border-bottom: 1px solid #333;
+      display: flex;
+      align-items: center;
+    }
+    .back-arrow {
+      font-weight: bold;
+      font-size: 1.5em;
+      color: #ffffff;
+      cursor: pointer;
+      margin-right: 1em;
+    }
+    .form-container {
+      padding: 2em;
+      text-align: center;
+    }
+    button {
+      background-color: #ffeb3b;
+      color: #000000;
+      border: none;
+      padding: 0.5em 1em;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #fbc02d;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <span class="back-arrow" onclick="window.location.href='edit-profile.html'">&larr;</span>
+    <span>Sign up for Paid Verification Badge</span>
+  </header>
+  <div class="form-container">
+    <p>Sign up to get your verified badge and increase your credibility.</p>
+    <button onclick="signUpForVerification()">Sign Up</button>
+  </div>
+  <script>
+    function signUpForVerification() {
+      alert("Thank you for signing up for a paid verification badge.");
+    }
+  </script>
+</body>
+</html>
